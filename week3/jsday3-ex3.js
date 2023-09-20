@@ -6,6 +6,7 @@ const SERVER_URL = "http://localhost:8080/api/cars"
 */
 document.getElementById("btn-get-all").addEventListener("click", getAllCars)
 document.getElementById("btn-find-car").addEventListener("click", getACar)
+document.getElementById("add-car").addEventListener("click", addCar)
 
 
 function getAllCars(){
@@ -46,5 +47,33 @@ function getACar(){
         })
 }
 
-  
+/*
+    Add a car or member
+*/
+function addCar(){
+    const form = document.getElementById('carForm');
+    const newCar = {
+        brand: form.brand.value,
+        model: form.model.value,
+        pricePrDay: parseFloat(form.pricePrDay.value),
+        bestDiscount: parseInt(form.bestDiscount.value),
+    };
+
+    console.log(newCar);
+    const options = {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify(newCar),
+    }
+
+    fetch(SERVER_URL, options)
+        .then(res=> res.json())
+        .then(carResponse => {
+            document.getElementById("new-car-response").innerText = JSON.stringify(carResponse, null, 3)})
+}
+
+
+
+
+
 
